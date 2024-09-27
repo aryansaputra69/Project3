@@ -31,7 +31,8 @@
                     </div>
                     <button type="submit" class=" form-control btn btn-primarymt-5">Login</button>
                 </form>
-                <p class="mt-2 text-center">Belum punya akun? <a href="{{ route('auth.register') }}"style="text-decoration: none">Ayo buat
+                <p class="mt-2 text-center">Belum punya akun? <a href="{{ route('auth.register') }}"
+                        style="text-decoration: none">Ayo buat
                         akun!</a></p>
             </div>
         </div>
