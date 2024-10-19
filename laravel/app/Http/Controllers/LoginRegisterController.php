@@ -14,12 +14,25 @@ class LoginRegisterController extends Controller
         return view('auth.register');
     }
 
-    public function userHome() {
-    return view('user.home');
+    public function userHome(Request $request) {
+    $search = $request->input('search');
+    $data = Buku::where(function($query) use ($search) {
+        $query->where('judul_buku', 'LIKE', '%' . $search . '%');
+    })->paginate(5);
+
+    return view('user.home', compact('data'));
+
 }
-    public function adminHome() {
-    return view('admin.home');
-    }
+    public function adminHome(Request $request) {
+    $search = $request->input('search');
+    $data = User::where('level', 'admin')
+        ->where(function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        })
+        ->paginate(5);
+    return view('admin.home', compact('data'));
+}
+
 
     public function postRegister(Request $request) {
         $request->validate([
@@ -34,7 +47,7 @@ class LoginRegisterController extends Controller
         $user->email = $request->email;
         $user->jenis_kelamin = $request->jenisKelamin;
         $user->password = Hash::make($request->password);
-        
+
         $user->save();
 
         if($user){
